@@ -44,10 +44,10 @@ def test_fetch_favicon_failure():
     with patch('src.ctmu.favicon_fetcher.requests.head', side_effect=Exception()):
         fetcher = FaviconFetcher()
         result = fetcher.fetch('https://example.com')
-        
+
         try:
             assert result.mode == 'RGBA'
-            assert result.size == (32, 32)
+            assert result.size == (180, 180)
         finally:
             result.close()
 
@@ -64,6 +64,6 @@ def test_create_default_icon():
     icon = fetcher._create_default_icon()
     try:
         assert icon.mode == 'RGBA'
-        assert icon.size == (32, 32)
+        assert icon.size == (180, 180)
     finally:
         icon.close()

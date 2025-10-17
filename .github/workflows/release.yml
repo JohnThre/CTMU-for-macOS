@@ -11,10 +11,15 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write  # Required for creating releases
+
 jobs:
   build:
     runs-on: macos-latest
     environment: production
+    permissions:
+      contents: write  # Required to create releases
 
     steps:
     - uses: actions/checkout@v4
@@ -47,10 +52,10 @@ jobs:
       run: |
         python -m build
 
-    - name: Create checksums
+    - name: Save Python packages temporarily
       run: |
-        cd dist
-        shasum -a 256 *.whl *.tar.gz > checksums.txt
+        mkdir -p /tmp/python-packages
+        cp dist/*.whl dist/*.tar.gz /tmp/python-packages/
 
     - name: Import GPG key
       run: |
@@ -82,6 +87,14 @@ jobs:
         # Run build script
         ./build_release.sh
       continue-on-error: true
+
+    - name: Restore Python packages and create unified checksums
+      run: |
+        # Restore Python packages
+        cp /tmp/python-packages/* dist/
+        # Create unified checksums for all packages
+        cd dist
+        shasum -a 256 *.whl *.tar.gz *.pkg *.dmg > checksums.txt
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
@@ -131,6 +144,8 @@ jobs:
     needs: build
     runs-on: macos-latest
     environment: production
+    permissions:
+      contents: read  # Required to checkout code
     if: startsWith(github.ref, 'refs/tags/')
 
     steps:

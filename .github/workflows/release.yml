@@ -52,15 +52,13 @@ jobs:
         cd dist
         shasum -a 256 *.whl *.tar.gz > checksums.txt
 
-    - name: Import GPG key (if available)
-      if: secrets.GPG_PRIVATE_KEY != ''
+    - name: Import GPG key
       run: |
         echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
         echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --yes --passphrase-fd 0 --quick-add-key $(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2) rsa4096 sign
       continue-on-error: true
 
-    - name: Build macOS release packages (if GPG available)
-      if: secrets.GPG_PRIVATE_KEY != ''
+    - name: Build macOS release packages
       run: |
         chmod +x build_release.sh
         ./build_release.sh
@@ -134,10 +132,8 @@ jobs:
         python -m build
 
     - name: Publish to PyPI
-      if: secrets.PYPI_API_TOKEN != ''
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
         python -m twine upload dist/*.whl dist/*.tar.gz
-      continue-on-error: true

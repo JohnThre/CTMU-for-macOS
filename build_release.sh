@@ -102,4 +102,3 @@ fi
 echo "Release packages created:"
 ls -la CTMU-$VERSION.*
 echo "Build complete!"
-EOF

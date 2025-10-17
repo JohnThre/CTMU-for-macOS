@@ -62,7 +62,7 @@ class TestGPGFunctions:
         assert result[0]['keyid'] == 'EFGH5678'
     
     def test_gpg_encrypt_no_gpg(self):
-        with patch('ctmu.gpg_utils.subprocess.run', side_effect=FileNotFoundError):
+        with patch('src.ctmu.gpg_utils.subprocess.run', side_effect=FileNotFoundError):
             result = gpg_encrypt_file('test.txt', 'user@example.com')
             assert "GPG not installed" in result
     

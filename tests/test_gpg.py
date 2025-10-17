@@ -2,15 +2,15 @@
 
 import pytest
 from unittest.mock import Mock, patch
-from ctmu.gpg_utils import (
-    gpg_encrypt_file, gpg_decrypt_file, gpg_sign_file, 
+from src.ctmu.gpg_utils import (
+    gpg_encrypt_file, gpg_decrypt_file, gpg_sign_file,
     gpg_verify_file, gpg_list_keys, gpg_generate_key,
     gpg_export_key, gpg_import_key
 )
 
 class TestGPGFunctions:
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_encrypt_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""
@@ -20,7 +20,7 @@ class TestGPGFunctions:
         assert "Encrypted test.txt to test.txt.gpg" in result
         mock_run.assert_called_once()
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_decrypt_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""
@@ -30,7 +30,7 @@ class TestGPGFunctions:
         assert "Decrypted test.txt.gpg to test.txt" in result
         mock_run.assert_called_once()
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_sign_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""
@@ -40,7 +40,7 @@ class TestGPGFunctions:
         assert "Signed test.txt to test.txt.sig" in result
         mock_run.assert_called_once()
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_verify_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""
@@ -50,7 +50,7 @@ class TestGPGFunctions:
         assert "Signature verified" in result
         mock_run.assert_called_once()
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_list_keys_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stdout = "pub:u:4096:1:ABCD1234EFGH5678:1234567890:::u:::scESC:::\nuid:u::::1234567890::Test User <test@example.com>:::\n"
@@ -66,7 +66,7 @@ class TestGPGFunctions:
             result = gpg_encrypt_file('test.txt', 'user@example.com')
             assert "GPG not installed" in result
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_generate_key_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""
@@ -76,7 +76,7 @@ class TestGPGFunctions:
         assert "Key generated successfully" in result
         mock_run.assert_called_once()
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_export_key_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""
@@ -86,7 +86,7 @@ class TestGPGFunctions:
         assert "Exported key ABCD1234 to ABCD1234.asc" in result
         mock_run.assert_called_once()
     
-    @patch('ctmu.gpg_utils.subprocess.run')
+    @patch('src.ctmu.gpg_utils.subprocess.run')
     def test_gpg_import_key_success(self, mock_run):
         mock_run.return_value.returncode = 0
         mock_run.return_value.stderr = ""

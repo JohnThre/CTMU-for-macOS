@@ -1,9 +1,9 @@
 """Tests for extended utilities"""
 
 import pytest
-from ctmu.text_utils import count_words, extract_urls, json_format
-from ctmu.math_utils import calculate, convert_base, statistics_calc
-from ctmu.time_utils import timestamp_to_date, date_to_timestamp
+from src.ctmu.text_utils import count_words, extract_urls, json_format
+from src.ctmu.math_utils import calculate, convert_base, statistics_calc
+from src.ctmu.time_utils import timestamp_to_date, date_to_timestamp
 
 class TestTextUtils:
     def test_count_words(self):

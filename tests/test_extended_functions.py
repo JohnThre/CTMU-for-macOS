@@ -2,9 +2,9 @@
 
 import pytest
 from unittest.mock import Mock, patch
-from ctmu.dev_utils import generate_uuid, generate_password, validate_json
-from ctmu.monitor_utils import cpu_usage, memory_usage
-from ctmu.backup_utils import create_zip
+from src.ctmu.dev_utils import generate_uuid, generate_password, validate_json
+from src.ctmu.monitor_utils import cpu_usage, memory_usage
+from src.ctmu.backup_utils import create_zip
 
 class TestDevUtils:
     def test_generate_uuid(self):
@@ -21,13 +21,13 @@ class TestDevUtils:
         assert "Invalid JSON" in validate_json('{"invalid": }')
 
 class TestMonitorUtils:
-    @patch('ctmu.monitor_utils.psutil.cpu_percent')
+    @patch('src.ctmu.monitor_utils.psutil.cpu_percent')
     def test_cpu_usage(self, mock_cpu):
         mock_cpu.return_value = 25.5
         result = cpu_usage()
         assert result == 25.5
-    
-    @patch('ctmu.monitor_utils.psutil.virtual_memory')
+
+    @patch('src.ctmu.monitor_utils.psutil.virtual_memory')
     def test_memory_usage(self, mock_memory):
         mock_mem = Mock()
         mock_mem.total = 8 * 1024**3
@@ -40,8 +40,8 @@ class TestMonitorUtils:
         assert result['percentage'] == '50.0%'
 
 class TestBackupUtils:
-    @patch('ctmu.backup_utils.zipfile.ZipFile')
-    @patch('ctmu.backup_utils.os.path.isfile')
+    @patch('src.ctmu.backup_utils.zipfile.ZipFile')
+    @patch('src.ctmu.backup_utils.os.path.isfile')
     def test_create_zip(self, mock_isfile, mock_zipfile):
         mock_isfile.return_value = True
         mock_zip = Mock()

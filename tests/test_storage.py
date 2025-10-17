@@ -3,7 +3,7 @@
 import pytest
 import sys
 from unittest.mock import Mock, patch, mock_open, MagicMock
-from ctmu.storage import (
+from src.ctmu.storage import (
     s3_upload, s3_download, s3_list, s3_delete,
     nextcloud_upload, nextcloud_download, nextcloud_list,
     nextcloud_delete, nextcloud_mkdir

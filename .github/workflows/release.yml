@@ -54,13 +54,32 @@ jobs:
 
     - name: Import GPG key
       run: |
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
-        echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --yes --passphrase-fd 0 --quick-add-key $(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2) rsa4096 sign
+        # Configure GPG for non-interactive use
+        mkdir -p ~/.gnupg
+        chmod 700 ~/.gnupg
+        echo "use-agent" > ~/.gnupg/gpg.conf
+        echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+        echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+
+        # Restart GPG agent
+        gpgconf --kill gpg-agent
+        gpg-agent --daemon --allow-preset-passphrase
+
+        # Import the private key with passphrase
+        echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --yes --pinentry-mode loopback --passphrase "${{ secrets.GPG_PASSPHRASE }}" --import
+
+        # List keys to verify import
+        gpg --list-secret-keys --keyid-format LONG
       continue-on-error: true
 
     - name: Build macOS release packages
+      env:
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       run: |
         chmod +x build_release.sh
+        # Update version in build script
+        sed -i '' "s/VERSION=\"0.1\"/VERSION=\"${{ steps.get_version.outputs.version }}\"/" build_release.sh
+        # Run build script
         ./build_release.sh
       continue-on-error: true
 

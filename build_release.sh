@@ -64,7 +64,11 @@ pkgbuild --root "$PKG_DIR" \
 
 # Sign PKG with GPG
 echo "Signing PKG with GPG..."
-gpg --detach-sign --armor --default-key jnc@freew.org "$DIST_DIR/CTMU-$VERSION.pkg"
+if [ -n "$GPG_PASSPHRASE" ]; then
+    echo "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --detach-sign --armor --default-key jnc@freew.org "$DIST_DIR/CTMU-$VERSION.pkg"
+else
+    gpg --detach-sign --armor --default-key jnc@freew.org "$DIST_DIR/CTMU-$VERSION.pkg"
+fi
 
 # Create DMG
 echo "Creating DMG..."
@@ -79,13 +83,21 @@ hdiutil create -volname "CTMU $VERSION" \
 
 # Sign DMG with GPG
 echo "Signing DMG with GPG..."
-gpg --detach-sign --armor --default-key jnc@freew.org "$DIST_DIR/CTMU-$VERSION.dmg"
+if [ -n "$GPG_PASSPHRASE" ]; then
+    echo "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --detach-sign --armor --default-key jnc@freew.org "$DIST_DIR/CTMU-$VERSION.dmg"
+else
+    gpg --detach-sign --armor --default-key jnc@freew.org "$DIST_DIR/CTMU-$VERSION.dmg"
+fi
 
 # Create checksums
 echo "Creating checksums..."
 cd $DIST_DIR
 shasum -a 256 *.pkg *.dmg > CTMU-$VERSION-checksums.txt
-gpg --clearsign --default-key jnc@freew.org CTMU-$VERSION-checksums.txt
+if [ -n "$GPG_PASSPHRASE" ]; then
+    echo "$GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --clearsign --default-key jnc@freew.org CTMU-$VERSION-checksums.txt
+else
+    gpg --clearsign --default-key jnc@freew.org CTMU-$VERSION-checksums.txt
+fi
 
 echo "Release packages created:"
 ls -la CTMU-$VERSION.*

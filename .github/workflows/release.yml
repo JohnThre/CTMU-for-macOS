@@ -104,9 +104,11 @@ jobs:
           dist/*.tar.gz
           dist/*.pkg
           dist/*.dmg
-          dist/*.asc
+          dist/*.pkg.asc
+          dist/*.dmg.asc
           dist/checksums.txt
-          dist/CTMU-*-checksums.txt*
+          dist/CTMU-*-checksums.txt
+          dist/CTMU-*-checksums.txt.asc
         body: |
           ## CTMU v${{ steps.get_version.outputs.version }}
 

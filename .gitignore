@@ -55,3 +55,12 @@ output/
 
 # Logs
 *.log
+
+# Claude and Cursor IDE
+.cursor/
+.claude/
+.cursorrules
+.cursorignore
+.cursorignorerules
+.cursorignorerules
+CLAUDE.md

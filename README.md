@@ -2,6 +2,12 @@
 
 **Swiss Army Knife CLI Tool** - QR codes, hashing, networking, file operations, and more!
 
+[![Tests](https://github.com/JohnThre/CTMU-for-macOS/actions/workflows/test.yml/badge.svg)](https://github.com/JohnThre/CTMU-for-macOS/actions/workflows/test.yml)
+[![Release](https://github.com/JohnThre/CTMU-for-macOS/actions/workflows/release.yml/badge.svg)](https://github.com/JohnThre/CTMU-for-macOS/actions/workflows/release.yml)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![codecov](https://codecov.io/gh/JohnThre/CTMU-for-macOS/branch/main/graph/badge.svg)](https://codecov.io/gh/JohnThre/CTMU-for-macOS)
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    CTMU Architecture                        │

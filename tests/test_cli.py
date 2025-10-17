@@ -15,7 +15,7 @@ def test_cli_with_url():
         
         assert result.exit_code == 0
         mock_generate.assert_called_once_with('https://example.com', 'bauhaus', '.')
-        assert 'QR code generated successfully!' in result.output
+        assert 'QR code generated!' in result.output
 
 def test_cli_with_style_and_output():
     """Test CLI with style and output options"""

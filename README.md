@@ -21,7 +21,7 @@
 
 ## Overview
 
-CTMU (Custom Terminal Multi Utility) is a comprehensive command-line Swiss Army knife for macOS developers and power users. Originally designed for QR code generation, it now includes 60+ essential utilities across 15 categories for daily development tasks.
+CTMU (Custom Terminal Multi Utility) is a comprehensive command-line Swiss Army knife for macOS developers and power users. Originally designed for QR code generation, it now includes 75+ essential utilities across 18 categories for daily development tasks.
 
 **One Tool, Multiple Solutions** - Replace dozens of separate utilities with a single, powerful CLI.
 
@@ -139,14 +139,29 @@ CTMU (Custom Terminal Multi Utility) is a comprehensive command-line Swiss Army 
 - **Optional:** Nextcloud server access (for WebDAV operations)
 - **Optional:** GPG (for encryption operations)
 
+#### Optional tools (Homebrew)
+```bash
+brew install nmap gnupg emacs
+```
+Only needed for network scanning (nmap), encryption (GPG), and Emacs integration.
+
 ## Installation
 
 ### Quick Install
 ```bash
 # Clone and install
-git clone <repository-url>
-cd "CTMU for macOS"
+git clone https://github.com/JohnThre/CTMU-for-macOS.git
+cd CTMU-for-macOS
 ./install.sh
+```
+
+### Install with pip (no clone)
+```bash
+pip install git+https://github.com/JohnThre/CTMU-for-macOS.git
+```
+Developers: use editable mode when working from a local clone:
+```bash
+pip install -e .
 ```
 
 ### Manual Install
@@ -405,7 +420,7 @@ ctmu backup sync source/ destination/ --delete
 
 ## Command Categories
 
-### Core Commands (15 categories, 60+ commands)
+### Core Commands (18 categories, 75+ commands)
 
 1. **QR Code Generation** - 1 command
 2. **Security & Hashing** - 4 commands  
